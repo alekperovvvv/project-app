@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
+use App\Models\Product;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +19,9 @@ Route::get('/', function () {
 });
 
 Route::get('/products', [ProductsController::class, 'index']);
+
+Route::get('products/{id}', function($id){
+    return view('order',['product'=>Product::find($id)]);
+});
+
+Route::post ('/order', [ProductsController::class,'order']);
