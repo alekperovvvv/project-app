@@ -13,19 +13,17 @@ use App\Http\Controllers\productController;?>
 </div>
 <div class="orderForm">
     <form action="/order" method="post">        
-        @csrf
-        <input type="hidden" name="product_id" value="{{ $product['id'] }}">        
-        <label for="name">Название</label>
-        <input name="name" readonly value="{{$product['name']}}" type="text">        
+        @csrf        
         <label for="amount">Количество</label>
         <input name="amount" type="number" min="0" max="{{$product['amount']}}">        
         <button type="submit">Заказать</button>
     </form>
-    @if(session('success'))        
+    @if(session('success'))
     <div>
-            {{ session('success') }}        
-        </div>
-    @endif
+        {{ session('success') }}
+    </div>
+@endif
+<a href="{{url("/products")}}">вернуться назад</a>
 </div>
 </body>
 </html>

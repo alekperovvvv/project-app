@@ -14,16 +14,15 @@ class ProductsController extends Controller
 
     public function order(Request $request) {    
         $validated = $request->validate([
-        'product_id' => 'required|exists:products,id',        
-        'amount' => 'required|integer|min:1',
-    ]);
-    $product = Product::findOrFail($validated['product_id']);    
-    $totalPrice = $product->cost * $validated['amount'];
-    $order = new Order();
-    $order->product_id = $product->id;    
-    $order->amount = $validated['amount'];
-    $order->total_price = $totalPrice;    
-    $order->save();
-    return redirect()->back()->with('success', "Заказ успешно оформлен на сумму $totalPrice руб.");
-}
+            'product_id' => 'required|exists:products,id',        
+            'amount' => 'required|integer|min:1',
+        ]);   
+    
+        $order = new Order();
+        
+        $order->product_id = $validated['product_id'];
+        $order->amount = $validated['amount'];
+        
+        $order->save();
+    }
 }
