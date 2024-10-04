@@ -1,5 +1,6 @@
 <?php
-use App\Http\Controllers\productController;?>
+use App\Http\Controllers\ProductsController;
+?>
 <!doctype html>
 <html lang="ru">
 <head>    
@@ -18,11 +19,6 @@ use App\Http\Controllers\productController;?>
         <input name="amount" type="number" min="0" max="{{$product['amount']}}">        
         <button type="submit">Заказать</button>
     </form>
-    @if(session('success'))
-    <div>
-        {{ session('success') }}
-    </div>
-@endif
 <a href="{{url("/products")}}">вернуться назад</a>
 </div>
 </body>

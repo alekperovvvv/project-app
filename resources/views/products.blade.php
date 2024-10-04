@@ -13,8 +13,12 @@
                 <p>Цена: {{ ($product->cost) }} руб.</p>
                 <p>{{ $product->amount > 0 ? 'Количество: ' . $product->amount : 'Нет в наличии' }}</p>
                 <a href="{{url("/products/$product->id")}}">подробнее</a>
-            </div>
+             </div>
         @endforeach
+    </div>
+    <div>
+        <a href="{{url("/login")}}">Выход</a>
+        <a href="{{url("/orderlist")}}">Ваши заказы</a>
     </div>
 </body>
 </html>
