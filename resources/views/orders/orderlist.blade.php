@@ -25,10 +25,10 @@
             <tbody>
                 @foreach ($orders as $order)
                     <tr>
-                        <td>{{ $order->id }}</td>
-                        <td>{{ $order->created_at }}</td>
-                        <td>{{ $order->total }}</td>
-                        <td>{{ $order->status }}</td>
+                        <td>{{ $orders->id }}</td>
+                        <td>{{ $orders->amount }}</td>
+                        <td>{{ $orders->total_price }}</td>
+                        <td>{{ $orders->user_id }}</td>
                     </tr>
                 @endforeach
             </tbody>

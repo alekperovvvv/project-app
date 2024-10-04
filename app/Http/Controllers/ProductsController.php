@@ -18,21 +18,16 @@ class ProductsController extends Controller
             'amount' => 'required|integer|min:1',
         ]);   
     
-        $order = new Order();
+        $orders = new Order();
+        $orders->product_id = $validated['product_id'];
+        $orders->amount = $validated['amount'];
         
-        $order->product_id = $validated['product_id'];
-        $order->amount = $validated['amount'];
-        
-        $order->save();
+        $orders->save();
     }
     public function __construct()
     {
         $this->middleware('auth'); 
     }
 
-    public function create(Request $request)
-    {
-
-    }
 }
 
