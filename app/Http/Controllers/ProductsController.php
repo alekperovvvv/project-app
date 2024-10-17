@@ -12,22 +12,24 @@ class ProductsController extends Controller
         return view('products', ['products' => $products]); 
     }
 
-    public function order(Request $request) {    
-        $validated = $request->validate([
+    public function order(Request $request) 
+    {    
+        $request->validate([
             'product_id' => 'required|exists:products,id',        
             'amount' => 'required|integer|min:1',
         ]);   
-    
-        $orders = new Order();
-        $orders->product_id = $validated['product_id'];
-        $orders->amount = $validated['amount'];
-        
-        $orders->save();
+     
+        $order = new Order();
+        $order->product_id = $request->product_id;
+        $order->amount = $request->amount;
+        $order->status = 'новый'; // Устанавливаем статус по умолчанию
+        $order->save();
+ 
+        return redirect()->back()->with('success', 'Заказ успешно создан!');
     }
+
     public function __construct()
     {
         $this->middleware('auth'); 
     }
-
 }
-
