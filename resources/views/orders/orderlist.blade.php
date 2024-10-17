@@ -9,7 +9,7 @@
 @section('content')
     <h1>Ваши Заказы</h1>
 
-    @if ($orders->isEmpty())
+    @if (count($orders) < 1)
         <p>У вас нет заказов.</p>
         <a href="{{url("/products")}}">вернуться назад</a>
     @else
@@ -17,7 +17,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Дата</th>
+                    <th>Продукт</th>
+                    <th>Количество</th>
                     <th>Сумма</th>
                     <th>Статус</th>
                 </tr>
@@ -25,10 +26,11 @@
             <tbody>
                 @foreach ($orders as $order)
                     <tr>
-                        <td>{{ $orders->id }}</td>
-                        <td>{{ $orders->amount }}</td>
-                        <td>{{ $orders->total_price }}</td>
-                        <td>{{ $orders->user_id }}</td>
+                        <td>{{ $order['id'] }}</td>
+                        <td>{{ $order['product']->name }}</td>
+                        <td>{{ $order['amount'] }}</td>
+                        <td>{{ $order['product']->cost }}</td>
+                        <td>{{ $order['status'] }}</td>
                     </tr>
                 @endforeach
             </tbody>

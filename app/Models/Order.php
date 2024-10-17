@@ -13,4 +13,11 @@ class Order extends Model
     {
         return  $this->belongsTo(Product::class);
     }
+
+    protected static function booted(): void
+    {
+        static::creating(function (Order $order) {
+            $order->user_id = auth()->id();
+        });
+    }
 }

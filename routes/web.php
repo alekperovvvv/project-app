@@ -32,6 +32,9 @@ Route::get('products/{id}', function($id){
 });
 
 Route::post ('/order', [ProductsController::class,'order']);
+Route::post ('/updateOrder', [OrderController::class,'updateOrder']);
+
+Route::get ('/admin', [\App\Http\Controllers\AdminController::class,'index']);
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
