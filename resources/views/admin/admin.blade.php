@@ -61,5 +61,6 @@
             </tbody>
         </table>
     @endif
+    <a href="{{url("/products")}}">Выход</a>
 </body>
 </html>

@@ -27,36 +27,50 @@ class OrderController extends Controller
 
     public function updateOrder(Request $request)
     {
-        $request->validate([
-            'id' => 'required|integer',
-            'status' => 'required|string',
-        ]);
+    $request->validate([
+        'id' => 'required|integer',
+        'status' => 'required|string',
+    ]);
 
-        $order = Order::where('id', $request->id)->first();
-        if(!$order) {
-            return redirect()->back()->with('warning', 'Заказ не найден');
+    $order = Order::where('id', $request->id)->first();
+    if (!$order) {
+        return redirect()->back()->with('warning', 'Заказ не найден!');
+    }
+
+    $success = true;
+    if ($request->status === 'одобрен') {
+        $productData = Product::where('id', $order->product_id)->first();
+        // Товаров заказано больше чем на складе
+        if ($productData && $productData->amount < $order->amount) {
+            $success = false;
         }
+    }
 
-        $success = true;
-        if($request->status === 'одобрен') {
-            $productData = Product::where('id', $order->product_id)->first();
-            // Товаров заказано больше чем на складе
-            if($productData && $productData->amount < $order->amount) {
-                $success = false;
-            }
+    if (!$success) {
+        return redirect()->back()->with('warning', 'На складе мало товара!');
+    }
+
+    // Проверка на возврат к предыдущему статусу
+    $statusPriority = [
+        'новый' => 1,
+        'одобрен' => 2,
+        'доставлен' => 3,
+        'завершен' => 4 // добавьте другие статусы по необходимости
+    ];
+
+    if (isset($statusPriority[$request->status]) && isset($statusPriority[$order->status])) {
+        if ($statusPriority[$request->status] < $statusPriority[$order->status]) {
+            return redirect()->back()->with('warning', 'Нельзя вернуть заказ к предыдущему статусу!');
         }
+    }
 
-        if(!$success) {
-            return redirect()->back()->with('warning', 'На складе мало товара');
-        }
+    if ($request->status === 'доставлен' && $order->status === 'новый') {
+        return redirect()->back()->with('warning', 'Новый заказ нужно одобрить!');
+    }
 
-        if($request->status === 'доставлен' && $order->status === 'новый') {
-            return redirect()->back()->with('warning', 'Новый заказ нужно одобрить');
-        }
+    $order->status = $request->status;
+    $order->save();
 
-        $order->status = $request->status;
-        $order->save();
-
-        return redirect()->back()->with('success', 'Заказ успешно обновлен!');
+    return redirect()->back()->with('success', 'Заказ успешно обновлен!');  
     }
 }

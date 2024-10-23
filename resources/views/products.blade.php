@@ -19,6 +19,7 @@
     <div>
         <a href="{{url("/login")}}">Выход</a>
         <a href="{{url("/orderlist")}}">Ваши заказы</a>
+        <a href="{{url("/admin")}}">Админ-панель</a>
     </div>
 </body>
 </html>

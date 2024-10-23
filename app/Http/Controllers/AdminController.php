@@ -32,6 +32,6 @@ class AdminController extends Controller
             return view('admin/admin', compact('orders')); // создайте представление admin/index.blade.php
         }
 
-        return redirect('/'); // или на другую страницу, если доступ запрещен
+        return redirect('/login')->with('error', 'У вас нет прав администратора!');// или на другую страницу, если доступ запрещен
     }
 }
